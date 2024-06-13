@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>titulo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        nav {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            text-align: center;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        main {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            padding: 20px;
+            width: 100%;
+            max-width: 1200px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+        .note-preview {
+            width: 75%;
+            padding-right: 20px;
+        }
+        .note-preview h2 {
+            margin: 0 0 10px;
+            font-size: 2em;
+            color: #333;
+        }
+        .note-preview .note-category {
+            font-size: 1em;
+            color: #777;
+            margin: 5px 0;
+        }
+        .note-preview .note-date {
+            font-size: 0.8em;
+            color: #999;
+            margin-bottom: 20px;
+        }
+        .note-preview p {
+            font-size: 1.2em;
+            color: #555;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Nova Nota</a></li>
+        </ul>
+    </nav>
+    <main>
+        <div id="main" class="note-preview" th:each="note: ${notes}">
+            <h2 th:text="${note.title}"></h2>
+            <div class="note-category" th:text="${note.category}"></div>
+            <div class="note-date">Criada em: 12/06/2024</div>
+            <p th:text="${note.content}"></p>
+            <button><a th:href="@{http://localhost:8080/home/edit/{id}(id=${note.id})}">Editar</a></button>
+            <button type="submit" id="delete-button" th:attr="data-id=${note.id}">Deletar</button>
+        </div>
+    </main>
+    <script type="text/javascript" th:src="@{/js/Delete.js}"></script>
+</body>
+</html>

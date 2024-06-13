@@ -21,14 +21,12 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
             
         </nav>
         <main>
-            <a th:each="note: ${notes}">
+            <a th:each="note: ${notes}" th:href="@{http://localhost:8080/home/{id}(id=${note.id})}">
                 <div class="note-preview">
                     <h2 th:text="${note.title}"></h2>
                     <div class="note-category" th:text="${note.category}"></div>
                     <div class="note-date">Criada em: 12/06/2024</div>
                     <p th:text="${note.content}">
-                        Este é o conteúdo da nota. Aqui você pode escrever detalhes importantes, pensamentos, lembretes ou qualquer outra informação relevante que precise ser registrada.
-                        O conteúdo pode ser longo ou curto, dependendo das suas necessidades.
                     </p>
                 </div>
         </a> 

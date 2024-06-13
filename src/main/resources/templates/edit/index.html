@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/CreateNote.css}">
+<!--    <link rel="stylesheet" type="text/css" href="../../static/css/EditNote.css">-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar nota</title>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Editar nota</h2>
+        <form id="form">
+            <input hidden name="id" th:field=*{note.id} id="id">
+            <div class="form-group">
+                <label for="title">Título da nota:</label>
+                <input type="text" id="title" name="title" required th:field=*{note.title}>
+            </div>
+            <div class="form-group">
+                <label for="content">Conteúdo:</label>
+                <textarea id="content" name="content" required th:text="${note.content}"></textarea>
+            </div>
+            <div class="form-group">
+                <select name="category" id="category">
+                    <option value="test">test</option>
+                    <option value="test2">test2</option>
+                    <option th:value="test3">test3</option>
+                    <option value="create"><a href="">Criar nova categoria</a></option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <button type="submit">Salvar</button>
+            </div>
+        </form>
+    </div>
+    
+
+    <script type="text/javascript" th:src="@{/js/EditNote.js}"></script>
+</body>
+</html>
