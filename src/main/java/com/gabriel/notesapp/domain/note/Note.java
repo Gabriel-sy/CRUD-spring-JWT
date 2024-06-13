@@ -1,11 +1,10 @@
-package com.gabriel.notesapp.domain;
+package com.gabriel.notesapp.domain.note;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @Getter
 @AllArgsConstructor
@@ -22,4 +21,15 @@ public class Note {
     private String content;
     private String category;
 
+    public Note(NoteDTO data){
+        this.title = data.title();
+        this.content = data.content();
+        this.category = data.category();
+    }
+
+    public Note(String title, String content, String category) {
+        this.title = title;
+        this.content = content;
+        this.category = category;
+    }
 }

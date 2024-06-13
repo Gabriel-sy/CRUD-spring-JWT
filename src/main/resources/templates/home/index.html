@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+<!--    <link rel="stylesheet" href="../../static/css/style.css">-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exibição de Notas</title>
+</head>
+<body>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a >Minhas Notas</a></li>
+                <li><a th:href="@{http://localhost:8080/home/create}">Nova Nota</a></li>
+                
+            </ul>
+        
+            
+        </nav>
+        <main>
+            <a th:each="note: ${notes}">
+                <div class="note-preview">
+                    <h2 th:text="${note.title}"></h2>
+                    <div class="note-category" th:text="${note.category}"></div>
+                    <div class="note-date">Criada em: 12/06/2024</div>
+                    <p th:text="${note.content}">
+                        Este é o conteúdo da nota. Aqui você pode escrever detalhes importantes, pensamentos, lembretes ou qualquer outra informação relevante que precise ser registrada.
+                        O conteúdo pode ser longo ou curto, dependendo das suas necessidades.
+                    </p>
+                </div>
+        </a> 
+        </main>
+</body>
+</html>
