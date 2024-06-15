@@ -5,7 +5,7 @@ document.getElementById('form').addEventListener('submit', function(event){
         id: document.getElementById('id').value,
         title: document.getElementById('title').value,
         content: document.getElementById('content').value,
-        category: document.getElementById('category').value
+        noteCategory: document.getElementById('category').value
     }
 
     fetch('http://localhost:8080/home/api/edit', {

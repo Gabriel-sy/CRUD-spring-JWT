@@ -79,14 +79,16 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <body>
     <nav>
         <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Nova Nota</a></li>
+            <li><a th:href="@{http://localhost:8080/home/list}">Home</a></li>
+            <li><a th:href="@{http://localhost:8080/home/create/category}">Nova Categoria</a></li>
+            <li><a th:href="@{http://localhost:8080/home/create}">Nova Nota</a></li>
+
         </ul>
     </nav>
     <main>
         <div id="main" class="note-preview" th:each="note: ${notes}">
             <h2 th:text="${note.title}"></h2>
-            <div class="note-category" th:text="${note.category}"></div>
+            <div class="note-category" th:text="${note.noteCategory}"></div>
             <div class="note-date">Criada em: 12/06/2024</div>
             <p th:text="${note.content}"></p>
             <button><a th:href="@{http://localhost:8080/home/edit/{id}(id=${note.id})}">Editar</a></button>

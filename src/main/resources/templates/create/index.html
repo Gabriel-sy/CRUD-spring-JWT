@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
@@ -9,6 +9,14 @@
     <title>Criar nova nota</title>
 </head>
 <body>
+    <nav>
+        <ul>
+            <li><a th:href="@{http://localhost:8080/home/list}">Home</a></li>
+            <li><a th:href="@{http://localhost:8080/home/create/category}">Nova Categoria</a></li>
+            <li><a th:href="@{http://localhost:8080/home/create}">Nova Nota</a></li>
+
+        </ul>
+    </nav>
     <div class="form-container">
         <h2>Criar nota</h2>
         <form id="form">
@@ -21,10 +29,13 @@
                 <textarea id="content" name="content" required></textarea>
             </div>
             <div class="form-group">
+                <label for="category">Categoria:</label>
                 <select name="category" id="category">
-                    <option value="test">test</option>
-                    <option value="create"><a href="">Criar nova categoria</a></option>
+                    <option th:each="categorys: ${category}"
+                            th:value="${categorys.categoryName}"
+                            th:text="${categorys.categoryName}"></option>
                 </select>
+                <a th:href="@{http://localhost:8080/home/create/category}">Criar nova categoria</a>
             </div>
             
             <div class="form-group">

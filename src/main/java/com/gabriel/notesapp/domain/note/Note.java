@@ -21,17 +21,17 @@ public class Note {
     private String title;
     @NotEmpty
     private String content;
-    private String category;
+    private String noteCategory;
 
     public Note(NoteDTO data){
         this.title = data.title();
         this.content = data.content();
-        this.category = data.category();
+        this.noteCategory = data.noteCategory();
     }
 
     public Note(String title, String content, String category) {
         this.title = title;
         this.content = content;
-        this.category = category;
+        this.noteCategory = category;
     }
 }
