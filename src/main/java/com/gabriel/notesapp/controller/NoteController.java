@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
-@RequestMapping("home")
+@RequestMapping("/home")
 public class NoteController {
     private final NoteService noteService;
     private final NoteRepository noteRepository;

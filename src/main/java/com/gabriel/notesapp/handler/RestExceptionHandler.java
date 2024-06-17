@@ -1,9 +1,6 @@
 package com.gabriel.notesapp.handler;
 
-import com.gabriel.notesapp.exception.EntityExistsException;
-import com.gabriel.notesapp.exception.EntityExistsExceptionDetails;
-import com.gabriel.notesapp.exception.EntityNotFoundException;
-import com.gabriel.notesapp.exception.EntityNotFoundExceptionDetails;
+import com.gabriel.notesapp.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -36,5 +33,17 @@ public class RestExceptionHandler {
                         .timestamp(LocalDateTime.now())
                         .build(), HttpStatus.NOT_FOUND
                 );
+    }
+
+    @ExceptionHandler(JWTCreationException.class)
+    public ResponseEntity<JWTCreationExceptionDetails> JWTCreationExceptionHandler(JWTCreationException exception){
+        return new ResponseEntity<>(
+                JWTCreationExceptionDetails.builder()
+                        .message(exception.getMessage())
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                        .details("ERRO AO CRIAR TOKEN")
+                        .timestamp(LocalDateTime.now())
+                        .build(), HttpStatus.INTERNAL_SERVER_ERROR
+        );
     }
 }
