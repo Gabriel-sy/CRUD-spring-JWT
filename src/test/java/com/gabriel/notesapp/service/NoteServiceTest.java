@@ -3,6 +3,7 @@ package com.gabriel.notesapp.service;
 import com.gabriel.notesapp.domain.category.Category;
 import com.gabriel.notesapp.domain.category.CategoryDTO;
 import com.gabriel.notesapp.domain.note.Note;
+import com.gabriel.notesapp.domain.note.NoteDTO;
 import com.gabriel.notesapp.exception.EntityExistsException;
 import com.gabriel.notesapp.exception.EntityNotFoundException;
 import com.gabriel.notesapp.repository.CategoryRepository;
@@ -41,25 +42,25 @@ class NoteServiceTest {
     @Test
     @DisplayName("createNote doesnt throw excpetion when successfull")
     void createNote_DoesntThrowException_WhenSuccessfull() {
-        Note validNote = new Note(1L, "test", "test", "test");
-        Assertions.assertThatCode(() -> noteService.createNote(validNote))
+        NoteDTO validDTO = new NoteDTO("test", "test", "test");
+        Assertions.assertThatCode(() -> noteService.createNote(validDTO))
                 .doesNotThrowAnyException();
 
-        //Verificando que o noteRepository.save foi chamado 1 vez nesse teste, com o parametro validNoteDTO.
-        verify(noteRepository).save(validNote);
+        //Verificando que o noteRepository.save foi chamado 1 vez nesse teste.
+        verify(noteRepository).save(ArgumentMatchers.any());
     }
 
     @Test
     @DisplayName("createNote throws exception when note is invalid")
     void createNote_ThrowsIllegalArgumentException_WhenNoteIsInvalid() {
-        Note invalidNote = new Note("blabla", "blabla", "blabla");
+        NoteDTO invalidDTO = new NoteDTO("blabla", "blabla", "blabla");
         BDDMockito.when(noteRepository.save(ArgumentMatchers.any(Note.class)))
                 .thenThrow(IllegalArgumentException.class);
 
         Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> noteService.createNote(invalidNote));
+                .isThrownBy(() -> noteService.createNote(invalidDTO));
 
-        verify(noteRepository).save(invalidNote);
+        verify(noteRepository).save(ArgumentMatchers.any(Note.class));
     }
 
     @Test

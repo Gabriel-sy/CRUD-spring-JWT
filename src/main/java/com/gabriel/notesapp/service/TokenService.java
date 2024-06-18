@@ -14,7 +14,7 @@ import java.time.ZoneOffset;
 @Service
 public class TokenService {
 
-
+    //Criando token jwt
     public String generateToken(User user){
         final String secret = "123";
         Algorithm algorithm = Algorithm.HMAC256(secret);
@@ -30,6 +30,7 @@ public class TokenService {
         }
     }
 
+    //Verificando token jwt, dá para pegar o usuário a partir do token usando isso aqui também.
     public String validateToken(String token){
         final String secret = "123";
         try {
@@ -44,6 +45,7 @@ public class TokenService {
         }
     }
 
+    //Setando token para expirar em 2 horas.
     public Instant getTokenExpiration(){
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }

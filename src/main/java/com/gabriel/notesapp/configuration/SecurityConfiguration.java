@@ -39,8 +39,8 @@ public class SecurityConfiguration {
                         .requestMatchers("/error").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/api/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/api/login").permitAll()
-
                         .anyRequest().authenticated())
+                //Adicionando filtro jwt antes de todos os outros filtros.
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
 

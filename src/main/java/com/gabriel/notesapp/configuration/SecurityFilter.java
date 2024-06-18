@@ -38,7 +38,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             }
             if (jwtToken != null){
                 //O validate token retorna o login do usuário, porque tem o ".getSubject()"
-                var login = tokenService.validateToken(jwtToken);
+                String login = tokenService.validateToken(jwtToken);
                 UserDetails user = userRepository.findByLogin(login);
 
                 var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());

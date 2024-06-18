@@ -50,7 +50,7 @@ class NoteControllerTest {
                 .content(objectMapper.writeValueAsString(validDTO)))
                 .andExpect(status().isOk());
 
-        verify(noteService).createNote(ArgumentMatchers.any(Note.class));
+        verify(noteService).createNote(ArgumentMatchers.any(NoteDTO.class));
     }
 
 
@@ -88,7 +88,7 @@ class NoteControllerTest {
                         .content(objectMapper.writeValueAsString(validDTO)))
                 .andExpect(status().isUnauthorized());
 
-        verify(noteService, never()).createNote(ArgumentMatchers.any(Note.class));
+        verify(noteService, never()).createNote(ArgumentMatchers.any(NoteDTO.class));
     }
 
     @Test
@@ -99,7 +99,7 @@ class NoteControllerTest {
                         .content(objectMapper.writeValueAsString(validNote)))
                 .andExpect(status().isUnauthorized());
 
-        verify(noteService, never()).createNote(ArgumentMatchers.any(Note.class));
+        verify(noteService, never()).editNote(ArgumentMatchers.any(Note.class));
     }
 
     @Test

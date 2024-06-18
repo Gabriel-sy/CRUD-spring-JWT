@@ -29,12 +29,27 @@ public class NoteController {
     //Criando nova nota, retornando 200 OK se tiver tudo certo
     @PostMapping(path = "/api/create")
     public ResponseEntity<Void> createNoteApi(@RequestBody @Valid NoteDTO noteDTO){
-        //Retorna IllegalArgumentException se o usuário já existir
-            //Transformando o DTO em note aqui porque ajuda nos testes.
-            Note newNote = new Note(noteDTO);
-
-            noteService.createNote(newNote);
+            noteService.createNote(noteDTO);
             return ResponseEntity.ok().build();
+    }
+
+    @PostMapping(path = "/api/delete/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        noteService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(path = "/api/edit")
+    public ResponseEntity<String> replace(@RequestBody Note note){
+        noteService.editNote(note);
+        return ResponseEntity.ok().build();
+
+    }
+
+    @PostMapping(path = "/api/create/category")
+    public ResponseEntity<Void> createCategory(@RequestBody CategoryDTO category){
+        noteService.createCategory(category);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping(path = "/list")
@@ -58,13 +73,6 @@ public class NoteController {
         return mv;
     }
 
-    @PutMapping(path = "/api/edit")
-    public ResponseEntity<String> replace(@RequestBody Note note){
-            noteService.editNote(note);
-            return ResponseEntity.ok().build();
-
-    }
-
     @GetMapping(path = "/edit/{id}")
     public ModelAndView replacePage(@PathVariable Long id, Model model){
         ModelAndView mv = new ModelAndView("/edit/index.html");
@@ -73,26 +81,10 @@ public class NoteController {
         return mv;
     }
 
-    @PostMapping(path = "/api/delete/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
-            noteService.delete(id);
-            return ResponseEntity.ok().build();
-    }
-
-    @PostMapping(path = "/api/create/category")
-    public ResponseEntity<Void> createCategory(@RequestBody CategoryDTO category){
-        noteService.createCategory(category);
-        return ResponseEntity.ok().build();
-    }
 
     @GetMapping(path = "/create/category")
     public ModelAndView createCategoryPage(){
         return new ModelAndView("/category/index.html");
     }
 
-    @DeleteMapping(path = "/api/category/delete/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long id){
-        noteService.deleteCategory(id);
-        return ResponseEntity.ok().build();
-    }
 }

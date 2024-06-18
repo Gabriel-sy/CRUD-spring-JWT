@@ -3,6 +3,7 @@ package com.gabriel.notesapp.service;
 import com.gabriel.notesapp.domain.category.Category;
 import com.gabriel.notesapp.domain.category.CategoryDTO;
 import com.gabriel.notesapp.domain.note.Note;
+import com.gabriel.notesapp.domain.note.NoteDTO;
 import com.gabriel.notesapp.exception.EntityExistsException;
 import com.gabriel.notesapp.exception.EntityNotFoundException;
 import com.gabriel.notesapp.repository.CategoryRepository;
@@ -22,9 +23,10 @@ public class NoteService {
 
 
     //Salvando nota no banco
-    public void createNote(Note note){
-        if (noteRepository.findByTitle(note.getTitle()).isEmpty()){
-                    noteRepository.save(note);
+    public void createNote(NoteDTO note){
+        Note newNote = new Note(note);
+        if (noteRepository.findByTitle(newNote.getTitle()).isEmpty()){
+                    noteRepository.save(newNote);
         } else {
             throw new EntityExistsException("Esse titulo já existe");
         }

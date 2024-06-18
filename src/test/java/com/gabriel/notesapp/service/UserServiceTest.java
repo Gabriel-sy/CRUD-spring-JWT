@@ -23,6 +23,7 @@ class UserServiceTest {
     @Mock
     UserRepository userRepository;
 
+
     @Test
     @DisplayName("register doesnt throw exception when successfull")
     void register_DoesntThrowException_WhenSuccessfull() {
