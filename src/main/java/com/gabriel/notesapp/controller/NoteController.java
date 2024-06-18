@@ -32,6 +32,7 @@ public class NoteController {
         //Retorna IllegalArgumentException se o usuário já existir
             //Transformando o DTO em note aqui porque ajuda nos testes.
             Note newNote = new Note(noteDTO);
+
             noteService.createNote(newNote);
             return ResponseEntity.ok().build();
     }
@@ -59,7 +60,7 @@ public class NoteController {
 
     @PutMapping(path = "/api/edit")
     public ResponseEntity<String> replace(@RequestBody Note note){
-            noteService.createNote(note);
+            noteService.editNote(note);
             return ResponseEntity.ok().build();
 
     }

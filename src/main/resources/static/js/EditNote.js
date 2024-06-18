@@ -18,6 +18,7 @@ document.getElementById('form').addEventListener('submit', function(event){
     .then(response => {
         if(response.ok){
             alert("Nota editada");
+            window.location.href = "http://localhost:8080/home/list"
         } else {
             alert("Erro ao editar nota");
         }

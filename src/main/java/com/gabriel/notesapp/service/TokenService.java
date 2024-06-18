@@ -13,9 +13,10 @@ import java.time.ZoneOffset;
 
 @Service
 public class TokenService {
-    private final String secret = "123";
+
 
     public String generateToken(User user){
+        final String secret = "123";
         Algorithm algorithm = Algorithm.HMAC256(secret);
 
         try {
@@ -30,6 +31,7 @@ public class TokenService {
     }
 
     public String validateToken(String token){
+        final String secret = "123";
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
@@ -38,7 +40,7 @@ public class TokenService {
                     .verify(token)
                     .getSubject();
         } catch (JWTVerificationException e){
-            return "";
+            throw new JWTVerificationException("Token invalido");
         }
     }
 

@@ -4,9 +4,9 @@ import com.gabriel.notesapp.domain.category.Category;
 import com.gabriel.notesapp.domain.category.CategoryDTO;
 import com.gabriel.notesapp.domain.note.Note;
 import com.gabriel.notesapp.exception.EntityExistsException;
+import com.gabriel.notesapp.exception.EntityNotFoundException;
 import com.gabriel.notesapp.repository.CategoryRepository;
 import com.gabriel.notesapp.repository.NoteRepository;
-import com.gabriel.notesapp.exception.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 public class NoteService {
     private final NoteRepository noteRepository;
     private final CategoryRepository categoryRepository;
-
     public NoteService(NoteRepository noteRepository, CategoryRepository categoryRepository) {
         this.noteRepository = noteRepository;
         this.categoryRepository = categoryRepository;
@@ -25,11 +24,15 @@ public class NoteService {
     //Salvando nota no banco
     public void createNote(Note note){
         if (noteRepository.findByTitle(note.getTitle()).isEmpty()){
-            noteRepository.save(note);
+                    noteRepository.save(note);
         } else {
             throw new EntityExistsException("Esse titulo já existe");
         }
 
+    }
+
+    public void editNote(Note note){
+        noteRepository.save(note);
     }
 
     public Note findById(Long id) {

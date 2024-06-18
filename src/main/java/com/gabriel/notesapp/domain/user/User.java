@@ -1,6 +1,5 @@
 package com.gabriel.notesapp.domain.user;
 
-import com.gabriel.notesapp.domain.note.Note;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -28,14 +27,11 @@ public class User implements UserDetails {
     private String login;
     @NotEmpty
     private String password;
-    @Transient
-    private Note[] notes;
     private UserRoles role;
 
-    public User(String login, String password, UserRoles role) {
+    public User(String login, String password) {
         this.login = login;
         this.password = password;
-        this.role = role;
     }
 
     @Override
