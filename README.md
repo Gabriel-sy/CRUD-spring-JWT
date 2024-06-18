@@ -6,6 +6,7 @@ possuí interfaces usando Thymeleaf para renderizar dados do servidor, o código
 
 - Java
 - JUnit
+- Mockito
 - Spring Boot
 - Spring Security
 - Spring Data JPA
