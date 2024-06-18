@@ -18,6 +18,7 @@
                     if (response.ok) {
                         alert('Nota deletada com sucesso!');
                         document.querySelector('.note-preview').remove();
+                        window.location.href = "http://localhost:8080/home/list"
                     } else {
                         alert('Erro ao deletar a nota.');
                     }

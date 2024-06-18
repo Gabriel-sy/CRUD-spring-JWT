@@ -1,6 +1,11 @@
 package com.gabriel.notesapp.service;
 
+import com.gabriel.notesapp.domain.category.Category;
+import com.gabriel.notesapp.domain.category.CategoryDTO;
 import com.gabriel.notesapp.domain.note.Note;
+import com.gabriel.notesapp.exception.EntityExistsException;
+import com.gabriel.notesapp.exception.EntityNotFoundException;
+import com.gabriel.notesapp.repository.CategoryRepository;
 import com.gabriel.notesapp.repository.NoteRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(SpringExtension.class)
@@ -20,12 +26,14 @@ class NoteServiceTest {
     NoteService noteService;
 
     @Mock
-    NoteRepository repository;
+    NoteRepository noteRepository;
+    @Mock
+    CategoryRepository categoryRepository;
 
     @BeforeEach
     void setUp(){
         Note validNote = new Note(1L, "test", "test", "test");
-        BDDMockito.when(repository.findById(ArgumentMatchers.anyLong()))
+        BDDMockito.when(noteRepository.findById(ArgumentMatchers.anyLong()))
                 .thenReturn(Optional.of(validNote));
 
     }
@@ -37,28 +45,28 @@ class NoteServiceTest {
         Assertions.assertThatCode(() -> noteService.createNote(validNote))
                 .doesNotThrowAnyException();
 
-        //Verificando que o repository.save foi chamado 1 vez nesse teste, com o parametro validNoteDTO.
-        verify(repository).save(validNote);
+        //Verificando que o noteRepository.save foi chamado 1 vez nesse teste, com o parametro validNoteDTO.
+        verify(noteRepository).save(validNote);
     }
 
     @Test
     @DisplayName("createNote throws exception when note is invalid")
     void createNote_ThrowsIllegalArgumentException_WhenNoteIsInvalid() {
         Note invalidNote = new Note("blabla", "blabla", "blabla");
-        BDDMockito.when(repository.save(ArgumentMatchers.any(Note.class)))
+        BDDMockito.when(noteRepository.save(ArgumentMatchers.any(Note.class)))
                 .thenThrow(IllegalArgumentException.class);
 
         Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> noteService.createNote(invalidNote));
 
-        verify(repository).save(invalidNote);
+        verify(noteRepository).save(invalidNote);
     }
 
     @Test
     @DisplayName("findById returns Note when successfull")
     void findById_ReturnsNote_WhenSuccessfull() {
         Note validNote = new Note(1L, "test", "test", "test");
-        BDDMockito.when(repository.findById(ArgumentMatchers.anyLong()))
+        BDDMockito.when(noteRepository.findById(ArgumentMatchers.anyLong()))
                 .thenReturn(Optional.of(validNote));
         Note noteBody = noteService.findById(1L);
 
@@ -66,19 +74,19 @@ class NoteServiceTest {
                 .isNotNull()
                 .isEqualTo(validNote);
 
-       verify(repository).findById(ArgumentMatchers.anyLong());
+       verify(noteRepository).findById(ArgumentMatchers.anyLong());
     }
 
     @Test
     @DisplayName("findById throws IllegalArgumentException when id is invalid")
     void findById_ThrowsIllegalArgumentException_WhenIdIsInvalid() {
-        BDDMockito.when(repository.findById(ArgumentMatchers.anyLong()))
+        BDDMockito.when(noteRepository.findById(ArgumentMatchers.anyLong()))
                 .thenThrow(IllegalArgumentException.class);
 
         Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> noteService.findById(1L));
 
-        verify(repository).findById(ArgumentMatchers.anyLong());
+        verify(noteRepository).findById(ArgumentMatchers.anyLong());
     }
 
     @Test
@@ -88,18 +96,71 @@ class NoteServiceTest {
         Assertions.assertThatCode(() -> noteService.delete(validNote.getId()))
                 .doesNotThrowAnyException();
 
-        verify(repository).deleteById(validNote.getId());
+        verify(noteRepository).deleteById(validNote.getId());
     }
 
     @Test
     @DisplayName("delete throws IllegalArgumentException when id is invalid")
     void delete_ThrowsIllegalArgumentException_WhenIdIsInvalid() {
-        Mockito.doThrow(IllegalArgumentException.class).when(repository).deleteById(ArgumentMatchers.anyLong());
+        Mockito.doThrow(IllegalArgumentException.class).when(noteRepository).deleteById(ArgumentMatchers.anyLong());
 
         Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> noteService.delete(1L));
 
-        verify(repository).deleteById(1L);
+        verify(noteRepository).deleteById(1L);
     }
+
+    @Test
+    @DisplayName("createCategory doesnt throw exception when successfull")
+    void createCategory_DoesntThrowException_WhenSuccessfull() {
+        CategoryDTO validCategoryDTO = new CategoryDTO("asfas");
+        Assertions.assertThatCode(() -> noteService.createCategory(validCategoryDTO))
+                        .doesNotThrowAnyException();
+
+        verify(categoryRepository).findByCategoryName(ArgumentMatchers.any());
+        verify(categoryRepository).save(ArgumentMatchers.any(Category.class));
+    }
+
+    @Test
+    @DisplayName("createCategory throws exception when category already exists")
+    void createCategory_ThrowsException_WhenCategoryAlreadyExists() {
+        CategoryDTO validDTO = new CategoryDTO("blabal");
+
+        Mockito.doThrow(EntityExistsException.class).when(categoryRepository)
+                .findByCategoryName(ArgumentMatchers.anyString());
+
+        Assertions.assertThatExceptionOfType(EntityExistsException.class)
+                .isThrownBy(() -> noteService.createCategory(validDTO));
+
+        verify(categoryRepository).findByCategoryName(ArgumentMatchers.anyString());
+    }
+
+    @Test
+    @DisplayName("deleteCategory doesnt throw exception when successfull")
+    void deleteCategory_DoesntThrowException_WhenSuccessfull() {
+        BDDMockito.when(categoryRepository.existsById(ArgumentMatchers.anyLong()))
+                        .thenReturn(true);
+        Assertions.assertThatCode(() -> noteService.deleteCategory(1L))
+                .doesNotThrowAnyException();
+
+        verify(categoryRepository).existsById(1L);
+        verify(categoryRepository).deleteById(1L);
+    }
+
+    @Test
+    @DisplayName("deleteCategory throws exception when category doesnt exist")
+    void deleteCategory_ThrowsException_WhenCategoryDoesntExist() {
+
+        Mockito.doThrow(EntityNotFoundException.class).when(categoryRepository)
+                .existsById(ArgumentMatchers.anyLong());
+
+        Assertions.assertThatExceptionOfType(EntityNotFoundException.class)
+                .isThrownBy(() -> noteService.deleteCategory(1L));
+
+        verify(categoryRepository).existsById(1L);
+        verify(categoryRepository, never()).deleteById(1L);
+    }
+
+
 
 }

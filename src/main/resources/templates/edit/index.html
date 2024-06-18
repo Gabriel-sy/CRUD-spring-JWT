@@ -24,11 +24,11 @@
             <input hidden name="id" th:field=*{note.id} id="id">
             <div class="form-group">
                 <label for="title">Título da nota:</label>
-                <input type="text" id="title" name="title" required th:field=*{note.title}>
+                <input maxlength="13" type="text" id="title" name="title" required th:field=*{note.title}>
             </div>
             <div class="form-group">
                 <label for="content">Conteúdo:</label>
-                <textarea id="content" name="content" required th:text="${note.content}"></textarea>
+                <textarea maxlength="200" id="content" name="content" required th:text="${note.content}"></textarea>
             </div>
             <div class="form-group">
                 <select name="category" id="category">

@@ -17,6 +17,7 @@ document.getElementById('form').addEventListener('submit', function(event){
     .then(response => {
         if(response.ok){
             alert("Nota criada");
+            window.location.href = "http://localhost:8080/home/list"
         } else {
             alert("Erro ao criar nota");
         }

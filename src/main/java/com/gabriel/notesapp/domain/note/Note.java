@@ -23,6 +23,7 @@ public class Note {
     private String content;
     private String noteCategory;
 
+
     public Note(NoteDTO data){
         this.title = data.title();
         this.content = data.content();
