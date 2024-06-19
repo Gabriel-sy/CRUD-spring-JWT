@@ -54,28 +54,28 @@ public class NoteController {
 
     @GetMapping(path = "/list")
     public ModelAndView findAll(Model model){
-        ModelAndView mv = new ModelAndView("/home/index.html");
+        ModelAndView mv = new ModelAndView("home/index.html");
         model.addAttribute("notes", noteRepository.findAll(Sort.by(Sort.Direction.ASC, "id")));
         return mv;
     }
 
     @GetMapping(path = "/create")
     public ModelAndView createNote(Model model){
-        ModelAndView mv = new ModelAndView("/create/index.html");
+        ModelAndView mv = new ModelAndView("create/index.html");
         model.addAttribute("category", categoryRepository.findAll());
         return mv;
     }
 
     @GetMapping(path = "/{id}")
     public ModelAndView findById(@PathVariable Long id, Model model){
-            ModelAndView mv = new ModelAndView("/findbyid/index.html");
+            ModelAndView mv = new ModelAndView("findbyid/index.html");
             model.addAttribute("notes", noteService.findById(id));
         return mv;
     }
 
     @GetMapping(path = "/edit/{id}")
     public ModelAndView replacePage(@PathVariable Long id, Model model){
-        ModelAndView mv = new ModelAndView("/edit/index.html");
+        ModelAndView mv = new ModelAndView("edit/index.html");
         model.addAttribute("note", noteService.findById(id));
         model.addAttribute("category", categoryRepository.findAll());
         return mv;
@@ -84,7 +84,7 @@ public class NoteController {
 
     @GetMapping(path = "/create/category")
     public ModelAndView createCategoryPage(){
-        return new ModelAndView("/category/index.html");
+        return new ModelAndView("category/index.html");
     }
 
 }

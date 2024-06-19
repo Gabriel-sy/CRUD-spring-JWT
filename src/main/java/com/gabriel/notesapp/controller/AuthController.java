@@ -19,12 +19,12 @@ public class AuthController {
 
     @GetMapping(path = "/register")
     public ModelAndView registerPage(){
-        return new ModelAndView("/register/index.html");
+        return new ModelAndView("register/index.html");
     }
 
     @GetMapping(path = "/login")
     public ModelAndView loginPage(){
-        return new ModelAndView("/login/index.html");
+        return new ModelAndView("login/index.html");
     }
 
     @PostMapping(path = "/api/register")

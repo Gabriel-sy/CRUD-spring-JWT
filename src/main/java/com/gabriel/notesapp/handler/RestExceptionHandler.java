@@ -1,6 +1,7 @@
 package com.gabriel.notesapp.handler;
 
 import com.gabriel.notesapp.exception.*;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -56,6 +57,9 @@ public class RestExceptionHandler {
         List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
         //Pegando quais campos estavam com problema
         String fields = fieldErrors.stream().map(FieldError::getField).collect(Collectors.joining(", "));
+        //O map vai passar por todos os elementos da lista e aplicar a funçao passada e retorna cada elemento com a
+        // transformaçao da funçao na mesma ordem, nesse fieldMessage, ele vai retornar a lista "fieldErrors",
+        // mas com todos os elementos substituidos pela getDefaultMessage
         //Pegando quais foram os erros
         String fieldMessage = fieldErrors.stream().map(FieldError::getDefaultMessage).collect(Collectors.joining(", "));
         return new ResponseEntity<>(
