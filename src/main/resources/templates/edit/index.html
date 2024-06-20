@@ -35,8 +35,8 @@
                     <option th:each="categorys: ${category}"
                             th:value="${categorys.categoryName}"
                             th:text="${categorys.categoryName}"></option>
-                    <option value="create"><a href="">Criar nova categoria</a></option>
                 </select>
+                <a th:href="@{http://localhost:8080/home/create/category}">Criar nova categoria</a>
             </div>
             
             <div class="form-group">
