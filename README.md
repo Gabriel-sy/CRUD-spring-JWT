@@ -1,15 +1,16 @@
 # CRUD com Spring + JWT + Docker
-App que cria, edita e deleta notas usando Spring Data JPA, cada nota recebe uma categoria, que pode ser criada também, autenticação JWT com Spring Security, 
-possuí interfaces usando Thymeleaf para renderizar dados do servidor, o código também tem exceções personalizadas e testes unitários.
+App que cria, edita e deleta notas usando Spring Data JPA, cada nota recebe uma categoria, que pode ser criada também, autenticação JWT com Spring Security, Docker com PostgreSQL para banco de dados, testes unitários e
+possuí interfaces usando Thymeleaf para renderizar dados do servidor.
 
 ### Objetivo
-Aplicar a um projeto o que venho aprendendo sobre Spring Boot, Docker, testes unitários e bancos de dados. 
+Aplicar a um projeto o que venho aprendendo sobre Java, Spring Boot, Docker, JWT, testes unitários e bancos de dados. 
 
 ## Tecnologias
 
 - Java
 - JUnit
 - Mockito
+- Docker
 - Spring Boot
 - Spring Security
 - Spring Data JPA
