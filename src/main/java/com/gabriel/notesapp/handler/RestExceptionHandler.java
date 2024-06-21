@@ -1,7 +1,6 @@
 package com.gabriel.notesapp.handler;
 
 import com.gabriel.notesapp.exception.*;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -17,9 +16,9 @@ import java.util.stream.Collectors;
 public class RestExceptionHandler {
 
     @ExceptionHandler(EntityExistsException.class)
-    public ResponseEntity<EntityExistsExceptionDetails> entityExistsExceptionHandler(EntityExistsException exception){
+    public ResponseEntity<ExceptionDetails> entityExistsExceptionHandler(EntityExistsException exception){
         return new ResponseEntity<>(
-                    EntityExistsExceptionDetails.builder()
+                ExceptionDetails.builder()
                             .message(exception.getMessage())
                             .status(HttpStatus.BAD_REQUEST.value())
                             .details("Entidade já existe")
@@ -29,9 +28,9 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<EntityNotFoundExceptionDetails> entityNotFoundExceptionHandler(EntityNotFoundException exception){
+    public ResponseEntity<ExceptionDetails> entityNotFoundExceptionHandler(EntityNotFoundException exception){
         return new ResponseEntity<>(
-                EntityNotFoundExceptionDetails.builder()
+                ExceptionDetails.builder()
                         .message(exception.getMessage())
                         .status(HttpStatus.NOT_FOUND.value())
                         .details("Entidade nao encontrada")
@@ -41,9 +40,9 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler(JWTCreationException.class)
-    public ResponseEntity<JWTCreationExceptionDetails> jWTCreationExceptionHandler(JWTCreationException exception){
+    public ResponseEntity<ExceptionDetails> jWTCreationExceptionHandler(JWTCreationException exception){
         return new ResponseEntity<>(
-                JWTCreationExceptionDetails.builder()
+                ExceptionDetails.builder()
                         .message(exception.getMessage())
                         .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                         .details("ERRO AO CRIAR TOKEN")
@@ -74,9 +73,9 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler(InternalAuthenticationServiceException.class)
-    public ResponseEntity<InternalAuthenticationServiceExceptionDetails> internalAuthenticationServiceExceptionHandler(InternalAuthenticationServiceException exception){
+    public ResponseEntity<ExceptionDetails> internalAuthenticationServiceExceptionHandler(InternalAuthenticationServiceException exception){
         return new ResponseEntity<>(
-                InternalAuthenticationServiceExceptionDetails.builder()
+                ExceptionDetails.builder()
                         .message(exception.getMessage())
                         .status(HttpStatus.BAD_REQUEST.value())
                         .details("Erro ao autenticar, tente novamente")
