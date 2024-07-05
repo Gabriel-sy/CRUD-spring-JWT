@@ -25,19 +25,21 @@ Aplicar a um projeto o que venho aprendendo sobre Java, Spring Boot, Docker, JWT
 - JDK 17
 - Maven
 - Docker
+- PostgreSQL
 
 ### Iniciando aplicação
 
-Primeiro, clone o repositório:
+1) clone o repositório:
 ```bash
 git clone https://github.com/Gabriel-sy/CRUD-spring-JWT.git
 ```
-Inicie a aplicação com o docker:
+2) Inicie a aplicação com o docker:
 ```bash
 cd CRUD-spring-JWT
+docker-compose build
 docker-compose up
 ```
-A aplicação vai estar rodando na porta 8080, para registrar, acesse:
+A aplicação vai estar rodando na porta 8080, acesse:
 ```bash
 localhost:8080/auth/register
 ```

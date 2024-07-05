@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/home")
 public class NoteController {
@@ -57,6 +59,11 @@ public class NoteController {
         ModelAndView mv = new ModelAndView("home/index.html");
         model.addAttribute("notes", noteRepository.findAll(Sort.by(Sort.Direction.ASC, "id")));
         return mv;
+    }
+
+    @GetMapping(path = "/api/list")
+    public List<Note> findAllApi(){
+        return noteRepository.findAll();
     }
 
     @GetMapping(path = "/create")
